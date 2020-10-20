@@ -112,12 +112,15 @@ class ApiService {
         }
       });
     }
+
     return this.$http.put(this.apisURL + api.id,
       {
         'version': api.version,
         'description': api.description,
         'proxy': api.proxy,
         'paths': api.paths,
+        'flows': api.flows,
+        'plans': api.plans,
         'private': api.private,
         'visibility': api.visibility,
         'name': api.name,
@@ -166,11 +169,13 @@ class ApiService {
     return this.$http.post(this.apisURL + 'import', apiDefinition);
   }
 
-  importSwagger(apiId: string, swaggerDescriptor: string, config?): ng.IPromise<any> {
+  importSwagger(apiId: string, swaggerDescriptor: string, definitionVersion?: string, config?): ng.IPromise<any> {
+    const url = this.apisURL + (apiId  || '') + '/import/swagger' + (definitionVersion ? '?definitionVersion=' + definitionVersion : '');
+    const params = definitionVersion ? `?definitionVersion=${definitionVersion}` : '';
     if (apiId) {
-      return this.$http.put(this.apisURL + apiId + '/import/swagger', swaggerDescriptor, config);
+      return this.$http.put(`${this.apisURL}${apiId}/import/swagger${params}`, swaggerDescriptor, config);
     }
-    return this.$http.post(this.apisURL + 'import/swagger', swaggerDescriptor, config);
+    return this.$http.post(`${this.apisURL}import/swagger${params}`, swaggerDescriptor, config);
   }
 
   export(apiId, exclude, exportVersion): ng.IPromise<any> {
@@ -618,3 +623,7 @@ class ApiService {
 }
 
 export default ApiService;
+
+export function isV2(api) {
+  return api && api.gravitee === '2.0.0';
+}
