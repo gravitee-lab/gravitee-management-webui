@@ -139,7 +139,7 @@
             </goals>
             <phase>process-resources</phase>
             <configuration>
-              <arguments>run buildNoReg</arguments>
+              <arguments>run build:prod</arguments>
             </configuration>
           </execution>
         </executions>

@@ -21,12 +21,8 @@ const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const pkg = require('../package.json');
 const autoprefixer = require('autoprefixer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-
-const packages = Object.keys(pkg.dependencies);
-packages.splice(packages.indexOf('swagger-ui-dist'), 1);
 
 module.exports = {
   mode: 'production',
@@ -157,7 +153,6 @@ module.exports = {
     ]
   },
   entry: {
-    vendor: packages,
     app: `./${conf.path.src('index')}`
   },
   node: {
@@ -168,7 +163,19 @@ module.exports = {
   optimization: {
     minimize: true,
     splitChunks: {
-      chunks: 'all'
+      chunks: 'all',
+      cacheGroups: {
+        default: false,
+        // Merge all the CSS into one file
+        styles: {
+          name: 'styles',
+          test: /\.s?css$/,
+          chunks: 'all',
+          minChunks: 1,
+          reuseExistingChunk: true,
+          enforce: true
+        }
+      }
     }
   }
-};
+}
