@@ -69,6 +69,8 @@
           </mapping>
           <excludes>
             <exclude>LICENSE.txt</exclude>
+            <exclude>node/**</exclude>
+            <exclude>node_modules/**</exclude>
             <exclude>src/libraries/**</exclude>
             <exclude>**/*.scss</exclude>
             <exclude>**/*.svg</exclude>
@@ -81,11 +83,11 @@
             <exclude>**/*.eot</exclude>
             <exclude>package-json.lock</exclude>
             <exclude>.tmp/**</exclude>
-            <exclude>.vscode/**</exclude>
             <exclude>dist/**</exclude>
+            <exclude>.tmp/**</exclude>
+            <exclude>.vscode/**</exclude>
             <exclude>.*</exclude>
             <exclude>.*/**</exclude>
-            <exclude>**/*.adoc</exclude>
           </excludes>
         </configuration>
       </plugin>
